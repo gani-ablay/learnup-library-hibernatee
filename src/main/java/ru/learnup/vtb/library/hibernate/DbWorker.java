@@ -12,6 +12,7 @@ import ru.learnup.vtb.library.hibernate.entities.AuthorEntity;
 import ru.learnup.vtb.library.hibernate.entities.BookEntity;
 
 
+import javax.persistence.LockModeType;
 import java.util.Collection;
 
 public class DbWorker {
@@ -30,7 +31,9 @@ public class DbWorker {
 
     public Collection<BookEntity> getAllBooks() {
         try (final Session session = sessionFactory.openSession()) {
+//            session.lock(entity, LockModeType.PESSIMISTIC_WRITE);
             final Query<BookEntity> query = session.createQuery("from BookEntity ", BookEntity.class);
+//            query.setLockMode(LockModeType.PESSIMISTIC_WRITE);
             return query.getResultList();
         }
     }
